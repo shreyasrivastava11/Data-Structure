@@ -1,51 +1,58 @@
 #include<stdio.h>
 #include<stdlib.h>
+static struct node *start = NULL;
 struct node{
 	int data;
 	struct node *next;
 };
 //Insertion
-int enqueue(int element, struct node *&start){
-struct node *p,*temp,*temp1;
+enqueue(int element,struct node *&start){
+  struct node *p;
+  static struct node *temp1;
   p=(struct node*)malloc(sizeof(struct node)); 
   p->data=element;
   p->next=NULL;
-  if(start==NULL)
+  if(start == NULL)
   {
-  start=p;
-  temp=start;
+  	start = p;
+  	p->next=start;
   }
   else
   {
-    temp=start;
-    while(temp->next!=NULL)  //Traversing to find the last node which contain NULL
-    temp=temp->next;
-    temp->next=p;
-  } 
-  temp1=start;
-}
-//Deletion
-int dequeue(struct node *&start){
-struct node *temp;
-	//deletion
-	start = start->next;
-}
-//Traverse
-int traverse(struct node* &start)
-{
- struct node *temp1;
-  temp1=start;
-  while(temp1!=NULL)
-  {
-  printf("%d ",temp1->data);
-  temp1=temp1->next;
+   temp1 = start;
+   while(temp1->next!=start)   //Traversing to find the last node.
+   temp1=temp1->next;
+   p->next=start;
+   temp1->next = p;
+   temp1=p;
   }
+}
+//Traversing
+traverse(struct node *&start){
+  struct node *temp;
+  temp = start;
+  while(temp->next!=start)
+  {
+  printf("%d ",temp->data);
+  temp=temp->next;
+  }
+  printf("%d ",temp->data);
   printf("\n");	
 }
+//Deletion
+dequeue(struct node *&start){
+  static struct node *temp1;
+  temp1=start;
+  while(temp1->next->next!=start)
+  {
+  temp1=temp1->next; 
+  }
+  temp1->next = start;	
+}
 main(){
-	struct node *p,*start=NULL;
+	struct node *p;
 	int element,choice;
-	printf("--------------LINEAR QUEUE------------------\n");
+	printf("--------------CIRCULAR QUEUE------------------\n");
 	printf("              1.Insertion\n");
 	printf("              2.Deletion\n");
 	printf("              3.Traverse\n");

@@ -21,12 +21,6 @@ insertion_beg(int element,struct node *&start)
      start=p;
     }
     temp=start;
-    while(temp!=NULL)
-    {
-	printf("%d ",temp->data);
-	temp=temp->next;
-    }
-    printf("\n");
 }
 //Insertion at end
 insertion_end(int element,struct node* &start)
@@ -48,12 +42,6 @@ insertion_end(int element,struct node* &start)
     temp->next=p;
   } 
   temp1=start;
- while(temp1!=NULL)
- {
- 	printf("%d ",temp1->data);
- 	temp1=temp1->next;
- }
- printf("\n");
 }
 //Insertion at any position
 insertion_any(int element,struct node* &start)
@@ -79,13 +67,6 @@ insertion_any(int element,struct node* &start)
 	} 
     start=start->next;
   }
-  printf("The new linked list formed is:");
-  while(temp1!=NULL)
-  {
-  	printf("%d ",temp1->data);
-  	temp1=temp1->next;
-  }	
-  printf("\n");
 }
 //deletion at beginning
 deletion_beg(struct node* &start)
@@ -93,27 +74,23 @@ deletion_beg(struct node* &start)
 	struct node *temp;
 	//deletion
 	temp=start;
-	while(temp!=NULL)
+	while(temp->next->next!=NULL)
 	{
 		temp=temp->next;
-		printf("%d ",temp->data);
 	}
-	printf("\n");	
+	temp->next=start;	
 }
 
 //Deletion at end
 deletion_end(struct node* &start)
 {
-  struct node *temp1;
+  static struct node *temp1;
   temp1=start;
-  while(temp1!=NULL)
+  while(temp1->next->next!=NULL)
   {
-  if(temp1->next==NULL)
-  	temp1=NULL;
-  printf("%d ",temp1->data);
   temp1=temp1->next; 
   }
-  printf("\n");
+  temp1->next=NULL;
 }
 //Deletion at any point
 deletion_any(struct node* &start)
@@ -130,12 +107,6 @@ deletion_any(struct node* &start)
 	loc++;
 	temp1=temp1->next;	
   }
-  while(start!=NULL)
-  {
-  	printf("%d ",start->data);
-  	start=start->next;
-  }
-  printf("\n");
 }
 //Traversing of Linked List
 traverse(struct node* &start)
@@ -224,6 +195,7 @@ main()
 	printf("            7.Traversing\n");
 	printf("            8.Searching the elements which are in unsorted manner\n");
 	printf("            9.Searching the elements which are in sorted manner\n");
+	printf("            10.Exit\n");
 	for(;;)
 	{
 	printf("            Enter the choice:");
@@ -259,7 +231,14 @@ main()
         searching_unsorted(start);
     else if(choice==9)
 		searching_sorted(start);
-    else
+    else if(choice==10)
+    {
+    	printf("Name:- Shreya Srivastava\n");
+    	printf("Roll No.:- 2101641520134\n");
+    	printf("Class:- CS-AI-2A\n");
+    	break;
+	}
+	else
 	    printf("Enter Valid choice");
    }
    }

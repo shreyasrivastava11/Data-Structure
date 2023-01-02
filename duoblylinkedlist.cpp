@@ -6,31 +6,38 @@ struct node
 	struct node *prev;
 	struct node *next;
 };
+struct node *start=NULL;
 //Insertion at beginning
-insertion_beg(int element,struct node *&start)
+insertion_beg(int element)
 {
-	struct node *p,*temp,*prev=NULL;
+	struct node *p;
 	p = (struct node*)malloc(sizeof(struct node));
 	p->data = element;
 	p->next = NULL;
+	p->prev=NULL;
 	if(start==NULL)
 	start = p;
 	else
 	{
-	p->prev = start;
-	p->next = NULL;
-	start=p;
+	p->prev = NULL;
+	p->next = start;
+	start = p;
+	start->prev = p;
     }
-    temp = start;
-    while(temp!=NULL)
-    {
-    	printf("%d ",temp->data);
-    	temp=temp->next;
+}
+//traversing
+traverse()
+{
+	struct node *temp;
+	temp = start;
+	while(temp!=NULL){
+		printf("%d ",temp->data);
+		temp = temp->next;
 	}
+	printf("\n");
 }
 main()
 {
-	struct node *p,*start=NULL;
 	int choice;
     {
     printf("------------For doubly Linked List------------\n");
@@ -44,6 +51,7 @@ main()
 	printf("            7.Traversing\n");
 	printf("            8.Searching the elements which are in unsorted manner\n");
 	printf("            9.Searching the elements which are in sorted manner\n");
+	printf("            10.Exit\n");
 	for(;;)
 	{
 	printf("            Enter the choice:");
@@ -53,7 +61,7 @@ main()
 	{
 	    printf("Enter the element you want to insert:");
         scanf("%d",&element);
-		insertion_beg(element,start);
+		insertion_beg(element);
 	}
 //	else if(choice==2)
 //	{
@@ -73,8 +81,8 @@ main()
 //        deletion_end(start);
 //    else if(choice==6)
 //        deletion_any(start);
-//	else if(choice==7)
-//        traverse(start);
+	else if(choice==7)
+        traverse();
 //    else if(choice==8)
 //        searching_unsorted(start);
 //    else if(choice==9)

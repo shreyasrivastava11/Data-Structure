@@ -6,57 +6,52 @@ struct node
 	int data;
 	struct node *next;
 };
+struct node *start=NULL;
 //Insertion at Beginning
-insertion_beg(int element,struct node *&start)
+insertion_beg(int element)
 {
-	struct node *p,*temp;
+	struct node *p;
 	p=(struct node*)malloc(sizeof(struct node));
 	p->data=element;
     p->next=NULL;
     if(start==NULL)
+    {
     	start=p;
+    	p->next=start;
+    }
     else
     {
-     p->next=start;
-     start=p;
-    }
-    temp=start;
-    while(temp!=start)
-    {
-	printf("%d ",temp->data);
-	temp=temp->next;
-    }
-    printf("\n");
+    	p->next = start;
+    	while(start->next!=start)
+    	start = start->next;
+    	start->next=p;
+    	start = p;
+	} 
 }
 //Insertion at end
-insertion_end(int element,struct node* &start)
+insertion_end(int element)
 {
-  struct node *p,*temp,*temp1;
+  struct node *p;
+  static struct node *temp1;
   p=(struct node*)malloc(sizeof(struct node)); 
   p->data=element;
   p->next=NULL;
   if(start==NULL)
   {
   start=p;
-  temp=start;
+  p->next=start;
   }
   else
   {
-    temp=start;
-    while(temp->next!=NULL)  //Traversing to find the last node which contain NULL
-    temp=temp->next;
-    temp->next=p;
-  } 
-  temp1=start;
- while(temp1!=start)
- {
- 	printf("%d ",temp1->data);
- 	temp1=temp1->next;
- }
- printf("\n");
+    temp1=start;
+    while(temp1->next!=start)  //Traversing to find the last node which contain NULL
+    temp1=temp1->next;
+    temp1->next=p;
+    temp1=p;
+  }
 }
 //Insertion at any position
-insertion_any(int element,struct node* &start)
+insertion_any()
 {
   struct node *p,*temp,*temp1;
   int pos,new_element,loc=1;
@@ -67,28 +62,21 @@ insertion_any(int element,struct node* &start)
   scanf("%d",&new_element);
   p->data=new_element;
   p->next=NULL;
-  temp1=start;
-  while(start!=start)
+  temp1=start->next;
+  while(temp1!=start)
   {
   	loc++;
   	if((loc-1)==(pos-1))  //To get the previos node address of pos node
   	{
-  	 temp=start->next;
 	 start->next=p;
-	 p->next=temp;	
-	} 
-    start=start->next;
+	 p->next=temp1;	
+	}
+	temp1=temp1->next;
   }
-  printf("The new linked list formed is:");
-  while(temp1!=start)
-  {
-  	printf("%d ",temp1->data);
-  	temp1=temp1->next;
-  }	
-  printf("\n");
+  
 }
 //deletion at beginning
-deletion_beg(struct node* &start)
+deletion_beg()
 {
 	struct node *temp;
 	//deletion
@@ -102,21 +90,18 @@ deletion_beg(struct node* &start)
 }
 
 //Deletion at end
-deletion_end(struct node* &start)
+deletion_end()
 {
-  struct node *temp1;
+  static struct node *temp1;
   temp1=start;
-  while(temp1!=start)
+  while(temp1->next->next!=start)
   {
-  if(temp1->next==start)
-  	temp1=start;
-  printf("%d ",temp1->data);
   temp1=temp1->next; 
   }
-  printf("\n");
+  temp1->next=start;
 }
 //Deletion at any point
-deletion_any(struct node* &start)
+deletion_any()
 {
   struct node *temp1;
   int loc=1,pos;
@@ -138,19 +123,20 @@ deletion_any(struct node* &start)
   printf("\n");
 }
 //Traversing of Linked List
-traverse(struct node* &start)
+traverse()
 {
  struct node *temp1;
  temp1=start;
- while(temp1!=NULL)
+ while(temp1->next->next!=start)
  {
  	printf("%d ",temp1->data);
  	temp1=temp1->next;
  }
+ printf("%d ",temp1->data);
  printf("\n");	
 }
 //Searching the unsorted element of unsorted Linked List
-searching_unsorted(struct node* &start)
+searching_unsorted()
 {
   struct node *p,*temp;
   int loc=1,flag=0,item;
@@ -171,7 +157,7 @@ searching_unsorted(struct node* &start)
  printf("The data is not present in the linked list\n");
 }
 //Searching the sorted element present in linked list
-searching_sorted(struct node* &start)
+searching_sorted()
 {
   struct node *temp1;
   int item,loc=1,flag=0,temp2;
@@ -210,7 +196,7 @@ searching_sorted(struct node* &start)
 }
 main()
 {
-	struct node *p,*start=NULL;
+	struct node *p;
 	int choice;
     {
     printf("------------For Circular Linked List------------\n");
@@ -224,6 +210,7 @@ main()
 	printf("            7.Traversing\n");
 	printf("            8.Searching the elements which are in unsorted manner\n");
 	printf("            9.Searching the elements which are in sorted manner\n");
+	printf("            10.Exit\n");
 	for(;;)
 	{
 	printf("            Enter the choice:");
@@ -233,32 +220,34 @@ main()
 	{
 	    printf("Enter the element you want to insert:");
         scanf("%d",&element);
-		insertion_beg(element,start);
+		insertion_beg(element);
 	}
 	else if(choice==2)
 	{
 	    printf("Enter the element you want to insert:");
         scanf("%d",&element);
-	    insertion_end(element,start);
+	    insertion_end(element);
 	}
 	else if(choice==3)
-	{
-		printf("Enter the element you want to insert:");
-        scanf("%d",&element);
-	    insertion_any(element,start);
-	}
+	    insertion_any();
 	else if(choice==4)
-	    deletion_beg(start);
+	    deletion_beg();
     else if(choice==5)
-        deletion_end(start);
+        deletion_end();
     else if(choice==6)
-        deletion_any(start);
+        deletion_any();
 	else if(choice==7)
-        traverse(start);
+        traverse();
     else if(choice==8)
-        searching_unsorted(start);
+        searching_unsorted();
     else if(choice==9)
-		searching_sorted(start);
+		searching_sorted();
+	else if(choice==10){
+		printf("Name:Shreya Srivastava\n");
+		printf("Class:CS-AI-II-A\n");
+		printf("Roll No.: 2101641520134\n");
+		break;
+	}
     else
 	    printf("Enter Valid choice");
    }

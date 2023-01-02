@@ -3,51 +3,52 @@ int max_size;
 int q[1000];
 static int rear = -1,front = -1;
 //Insertion
-enqueue(int element){
-	if(rear >= max_size-1)
-	printf("The queue is overflow\n");
-	else{
-	if(front ==-1 && rear == -1)
-	{
-		front = 0;
-		rear = 0;
-		q[rear] = element;
+enqueue(int item)
+{
+    if((rear + 1)%max_size == front)
+    printf("The Queue is Overflow\n");
+    else
+    if(front == -1 && rear == -1){
+    	front = 0;
+    	rear = 0;
+    	q[rear] = item;
 	}
 	else
 	{
-		rear = rear + 1;
-		q[rear] = element;
-    }
+		rear = (rear + 1)%max_size;
+		q[rear] = item;
+	}
 }
-}
+//Traverse
 traverse()
 {
-	int i = front;
+	int i = 0;
 	while(i<=rear)
 	{
 		printf("%d ",q[i]);
-		i++;
+		i=(i+1)%n;
 	}
 	printf("\n");
 }
 //Deletion
 dequeue()
 {
- int element;
- if(front == -1)
- 	printf("Queue is empty\n");
- else
- {
-  element = q[front];
-  if(front == rear){
-     front = -1;
-     rear = -1;
-    }
- else
- 	front = front + 1;
- 	return element;
+  int data;
+  if(front == -1)
+  printf("The Queue is overflow\n");
+  else
+  {
+  data = q[front];
+  if(front == rear)
+  {
+  front = -1;
+  rear = -1;
   }
-printf("\n");
+  else
+  front = (front + 1)%max_size;
+  return data;
+  }
+  printf("\n");
 }
 main(){
 	int element,choice,result;
@@ -80,12 +81,12 @@ main(){
     else
     if(choice == 4)
     {
-    	printf("Name:- Shreya Srivastava\n");
-    	printf("Roll Number:- 2101641520134\n");
-    	printf("Class:- CS-AI-2A");
-    	break;
-	}
-	else
-	printf("Enter the valid choice\n");
+      printf("Name:- Shreya Srivastava\n");
+	  printf("Roll Number:- 2101641520134\n");
+	  printf("Class:- CS-AI-2A");	
+      break;
+    }
+    else
+    printf("Enter the valid choice\n");
     }
 }
